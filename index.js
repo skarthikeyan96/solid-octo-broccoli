@@ -1,12 +1,12 @@
 import axios from 'axios'
 import fs from 'fs'
-import { ChildProcess } from 'child_process';
+import { execSync } from 'child_process';
 
 async function run() {
   const GITHUB_REPOSITORY =
     "https://github.com/skarthikean96/solid-octo-broccoli";
 
-  const commitHash = ChildProcess.execSync("git rev-parse HEAD").toString().trim();
+  const commitHash = execSync("git rev-parse HEAD").toString().trim();
 
   const repoOwner = GITHUB_REPOSITORY.split("/")[0];
   const repoName = GITHUB_REPOSITORY.split("/")[1];
