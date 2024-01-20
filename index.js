@@ -22,9 +22,11 @@ async function run() {
 
       for (const file of markdownFiles) {
         const filePath = file.filename;
+        console.log("filePath", filePath)
         const fileContentResponse = await axios.get(
           `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${commitHash}/${filePath}`
         );
+        
 
         if (fileContentResponse.status === 200) {
           const fileContent = fileContentResponse.data;
