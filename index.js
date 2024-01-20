@@ -1,6 +1,7 @@
 import axios from 'axios'
 import fs from 'fs'
 import { execSync } from 'child_process';
+import grayMatter from 'gray-matter'
 
 async function run() {
   const GITHUB_REPOSITORY =
@@ -35,8 +36,9 @@ async function run() {
 
         if (fileContentResponse.status === 200) {
           const fileContent = fileContentResponse.data;
-        //   await fs.writeFile(filePath, fileContent, 'utf-8');
-          console.log(`Content of ${filePath}:\n${fileContent}`);
+          //   await fs.writeFile(filePath, fileContent, 'utf-8');
+          parseMdxFileContent(fileContent)
+          // console.log(`Content of ${filePath}:\n${fileContent}`);
         } else {
           console.error(`Failed to fetch content of ${filePath}:`, fileContentResponse.statusText);
         }
@@ -47,10 +49,16 @@ async function run() {
 
     //   console.log(res)
   } catch (error) {
-    console.log("asda")
-    console.error('Error:', error);
+    // console.log("asda")
+    // console.error('Error:', error);
   }
  
+}
+
+
+const parseMdxFileContent = (fileContent) => {
+ const data =  grayMatter(fileContent);
+ console.log(data)
 }
 
 run()

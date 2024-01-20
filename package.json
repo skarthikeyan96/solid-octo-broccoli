@@ -13,6 +13,7 @@
   "dependencies": {
     "@octokit/core": "^5.1.0",
     "axios": "^1.6.5",
+    "gray-matter": "^4.0.3",
     "node-fetch": "^3.3.2"
   }
 }
