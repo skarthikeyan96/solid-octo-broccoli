@@ -14,6 +14,8 @@ async function run() {
   try {
     const commitResponse = await axios.get(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`);
     
+    console.log(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`)
+    console.log(commitResponse)
     if (commitResponse.status === 200) {
       const data = commitResponse.data;
 
