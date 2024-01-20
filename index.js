@@ -11,6 +11,7 @@ async function run() {
   const repoOwner = GITHUB_REPOSITORY.split("/")[0];
   const repoName = GITHUB_REPOSITORY.split("/")[1];
 
+  console.log(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`)
   try {
     const commitResponse = await axios.get(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`);
     
