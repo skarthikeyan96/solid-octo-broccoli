@@ -1,3 +1,0 @@
-## blog content
-
-new blog
