@@ -1,6 +1,10 @@
+const fetch = require('node-fetch');
+const fs = require('fs');
+
+
 async function run() {
   const GITHUB_REPOSITORY =
-    "https://github.com/skarthikeyan96/solid-octo-broccoli";
+    "https://github.com/skarthikean96/solid-octo-broccoli";
 
   const commitHash = require("child_process")
     .execSync("git rev-parse HEAD")
