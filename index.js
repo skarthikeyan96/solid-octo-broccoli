@@ -2,6 +2,7 @@ import axios from 'axios'
 import fs from 'fs'
 import { execSync } from 'child_process';
 import { Octokit } from "@octokit/core";
+import * as core from '@actions/core'
 
 const octokit = new Octokit({ auth: process.env.ENV_GITHUB_TOKEN });
 
@@ -29,11 +30,14 @@ async function run() {
 
       for (const file of markdownFiles) {
         const filePath = file.filename;
-        console.log("filePath", filePath)
+       core.info('Output to the actions build log', filepath)
+
         const fileContentResponse = await axios.get(
           `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${commitHash}/${filePath}`
         );
         
+        core.info('Output to the actions build log', fileContentResponse)
+
 
         if (fileContentResponse.status === 200) {
           const fileContent = fileContentResponse.data;
@@ -47,15 +51,6 @@ async function run() {
     } else {
       console.error('Failed to fetch commit details:', commitResponse.statusText);
     }
-
-    // const res = await octokit.request('GET /repos/{owner}/{repo}/commits/{commitHash}', {
-    //     owner: 'skarthikeyan96',
-    //     repo: 'solid-octo-broccoli',
-    //     ref: commitHash,
-    //     headers: {
-    //       'X-GitHub-Api-Version': '2022-11-28'
-    //     }
-    //   })
 
     //   console.log(res)
   } catch (error) {
