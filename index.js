@@ -23,22 +23,20 @@ async function run() {
       // Filter and fetch the content of Markdown files
       const markdownFiles = data.files.filter(file => file.filename.endsWith('.md') || file.filename.endsWith('.mdx'));
 
-        data.files.filter(file => console.log(file.filename))
       for (const file of markdownFiles) {
         const filePath = file.filename;
     //    core.info('Output to the actions build log', filepath)
 
         const fileContentResponse = await axios.get(
-          `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${commitHash}/${filePath}`
+          `https://raw.githubusercontent.com/skarthikeyan96/solid-octo-broccoli/${commitHash}/${filePath}`
         );
-        
+
         // core.info('Output to the actions build log', fileContentResponse)
 
 
         if (fileContentResponse.status === 200) {
           const fileContent = fileContentResponse.data;
-          // Do something with the file content (e.g., save it to a file, process it, etc.)
-          await fs.writeFile(filePath, fileContent, 'utf-8');
+        //   await fs.writeFile(filePath, fileContent, 'utf-8');
           console.log(`Content of ${filePath}:\n${fileContent}`);
         } else {
           console.error(`Failed to fetch content of ${filePath}:`, fileContentResponse.statusText);
