@@ -1,11 +1,6 @@
 import axios from 'axios'
 import fs from 'fs'
 import { execSync } from 'child_process';
-import { Octokit } from "@octokit/core";
-import * as core from '@actions/core'
-
-const octokit = new Octokit({ auth: process.env.ENV_GITHUB_TOKEN });
-
 
 async function run() {
   const GITHUB_REPOSITORY =
@@ -28,15 +23,16 @@ async function run() {
       // Filter and fetch the content of Markdown files
       const markdownFiles = data.files.filter(file => file.filename.endsWith('.md') || file.filename.endsWith('.mdx'));
 
+        data.files.filter(file => console.log(file.filename))
       for (const file of markdownFiles) {
         const filePath = file.filename;
-       core.info('Output to the actions build log', filepath)
+    //    core.info('Output to the actions build log', filepath)
 
         const fileContentResponse = await axios.get(
           `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${commitHash}/${filePath}`
         );
         
-        core.info('Output to the actions build log', fileContentResponse)
+        // core.info('Output to the actions build log', fileContentResponse)
 
 
         if (fileContentResponse.status === 200) {
