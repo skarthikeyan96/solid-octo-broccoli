@@ -8,16 +8,15 @@ async function run() {
 
   const commitHash = execSync("git rev-parse HEAD").toString().trim();
 
-  const repoOwner = GITHUB_REPOSITORY.split("/")[0];
-  const repoName = GITHUB_REPOSITORY.split("/")[1];
-
-  console.log(`https://api.github.com/repos/skarthikeyan96/solid-octo-broccoli/commits/${commitHash}`)
   try {
+    // axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.ENV_GITHUB_TOKEN}`;
+
     const commitResponse = await axios.get(`https://api.github.com/repos/skarthikeyan96/solid-octo-broccoli/commits/${commitHash}`);
     
     // console.log(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`)
     // console.log(commitResponse)
     if (commitResponse.status === 200) {
+      console.log("gping in")
       const data = commitResponse.data;
 
       // Filter and fetch the content of Markdown files
@@ -48,7 +47,8 @@ async function run() {
 
     //   console.log(res)
   } catch (error) {
-    console.error('Error:', error.message);
+    console.log("asda")
+    console.error('Error:', error);
   }
  
 }
