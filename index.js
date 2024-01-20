@@ -11,9 +11,9 @@ async function run() {
   const repoOwner = GITHUB_REPOSITORY.split("/")[0];
   const repoName = GITHUB_REPOSITORY.split("/")[1];
 
-  console.log(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`)
+  console.log(`https://api.github.com/repos/skarthikean96/solid-octo-broccoli/commits/${commitHash}`)
   try {
-    const commitResponse = await axios.get(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`);
+    const commitResponse = await axios.get(`https://api.github.com/repos/skarthikean96/solid-octo-broccoli/commits/${commitHash}`);
     
     console.log(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`)
     console.log(commitResponse)
