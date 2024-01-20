@@ -26,4 +26,6 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: node index.js
-  
+      env:
+          ENV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
