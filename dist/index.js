@@ -43481,11 +43481,13 @@ const gql = (chunks, ...variables) => {
 
 
 
-const graphqlClient = new GraphQLClient('https://gql.hashnode.com/',{
-  headers:{
-    "Authorization": process.env.PERSONAL_ACCESS_TOKEN
-  }
-})
+const graphqlClient = new GraphQLClient("https://gql.hashnode.com/", {
+  headers: {
+    Authorization: process.env.PERSONAL_ACCESS_TOKEN,
+  },
+});
+
+const directory = process.env.CUSTOM_DIR || '/blog/'
 
 async function run() {
   const GITHUB_REPOSITORY =
@@ -43496,47 +43498,52 @@ async function run() {
   try {
     // axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.ENV_GITHUB_TOKEN}`;
 
-    const commitResponse = await lib_axios.get(`https://api.github.com/repos/skarthikeyan96/solid-octo-broccoli/commits/${commitHash}`);
-    
+    const commitResponse = await lib_axios.get(
+      `https://api.github.com/repos/skarthikeyan96/solid-octo-broccoli/commits/${commitHash}`
+    );
+
     // console.log(`https://api.github.com/repos/${repoOwner}/${repoName}/commits/${commitHash}`)
     // console.log(commitResponse)
     if (commitResponse.status === 200) {
-      console.log("gping in")
+      console.log("gping in");
       const data = commitResponse.data;
 
       // Filter and fetch the content of Markdown files
-      const markdownFiles = data.files.filter(file => file.filename.endsWith('.md') || file.filename.endsWith('.mdx'));
-
+      const markdownFiles = data.files.filter(
+        (file) =>
+          file.filename.endsWith(".md") || file.filename.endsWith(".mdx")
+      );
+      console.log(markdownFiles)
       for (const file of markdownFiles) {
         const filePath = file.filename;
-    //    core.info('Output to the actions build log', filepath)
 
         const fileContentResponse = await lib_axios.get(
           `https://raw.githubusercontent.com/skarthikeyan96/solid-octo-broccoli/${commitHash}/${filePath}`
         );
 
-        // core.info('Output to the actions build log', fileContentResponse)
-
 
         if (fileContentResponse.status === 200) {
           const fileContent = fileContentResponse.data;
           //   await fs.writeFile(filePath, fileContent, 'utf-8');
-          parseMdxFileContent(fileContent)
+          parseMdxFileContent(fileContent);
           // console.log(`Content of ${filePath}:\n${fileContent}`);
         } else {
-          console.error(`Failed to fetch content of ${filePath}:`, fileContentResponse.statusText);
+          console.error(
+            `Failed to fetch content of ${filePath}:`,
+            fileContentResponse.statusText
+          );
         }
       }
     } else {
-      console.error('Failed to fetch commit details:', commitResponse.statusText);
+      console.error(
+        "Failed to fetch commit details:",
+        commitResponse.statusText
+      );
     }
 
-    //   console.log(res)
   } catch (error) {
-    // console.log("asda")
-    // console.error('Error:', error);
+    console.error('Error:', error);
   }
- 
 }
 
 /**
@@ -43553,37 +43560,41 @@ async function run() {
 }
  */
 const parseMdxFileContent = async (fileContent) => {
- const {data, content} =  gray_matter(fileContent);
- 
- console.log(data)
-  
- // parse the content and make it ready for sending to hashnode's server
+  const { data, content } = gray_matter(fileContent);
 
-// const mutation = gql`
-//  mutation PublishPost($input: PublishPostInput!) {
-//   publishPost (input: $input){
-//     post {
-//       id
-//       slug
-//       title
-//       subtitle
-//     }
-//   }
-// }`
+  const {title, subtitle, tags: [], } = data
+  console.log(data);
 
-// const variables = {
-//   "input" : {
-//     "title":  "My First article", // spread the entire front matter
-//     "publicationId": "5faeafa108f9e538a0136e73", // needs to be constant
-//     "tags": [],
-//     "contentMarkdown": content
-//   }
-// }
+  // parse the content and make it ready for sending to hashnode's server
 
-// const results = await graphqlClient.request(mutation, variables);
-// console.log(results)
-}
+  const mutation = gql`
+    mutation PublishPost($input: PublishPostInput!) {
+      publishPost(input: $input) {
+        post {
+          id
+          slug
+          title
+          subtitle
+        }
+      }
+    }
+  `;
 
-run()
+  const variables = {
+    "input" : {
+      "title":  title, // spread the entire front matter
+      "publicationId": "5faeafa108f9e538a0136e73", // needs to be constant
+      "tags": [],
+      "contentMarkdown": content
+    }
+  }
+  console.log(variables)
+
+  // const results = await graphqlClient.request(mutation, variables);
+  // console.log(results)
+};
+
+run();
+
 })();
 
