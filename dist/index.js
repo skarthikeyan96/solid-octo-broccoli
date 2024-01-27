@@ -43487,7 +43487,7 @@ const graphqlClient = new GraphQLClient("https://gql.hashnode.com/", {
   },
 });
 
-const directory = process.env.CUSTOM_DIR || '/'
+const directory = process.env.CUSTOM_DIR || '/blog/'
 
 async function run() {
   const GITHUB_REPOSITORY =
@@ -43513,16 +43513,14 @@ async function run() {
         (file) =>
           file.filename.endsWith(".md") || file.filename.endsWith(".mdx")
       );
-
+      console.log(markdownFiles)
       for (const file of markdownFiles) {
         const filePath = file.filename;
-        //    core.info('Output to the actions build log', filepath)
 
         const fileContentResponse = await lib_axios.get(
           `https://raw.githubusercontent.com/skarthikeyan96/solid-octo-broccoli/${commitHash}/${directory}${filePath}`
         );
 
-        // core.info('Output to the actions build log', fileContentResponse)
 
         if (fileContentResponse.status === 200) {
           const fileContent = fileContentResponse.data;
@@ -43543,10 +43541,8 @@ async function run() {
       );
     }
 
-    //   console.log(res)
   } catch (error) {
-    // console.log("asda")
-    // console.error('Error:', error);
+    console.error('Error:', error);
   }
 }
 
