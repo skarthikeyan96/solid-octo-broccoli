@@ -11,7 +11,7 @@ const graphqlClient = new GraphQLClient("https://gql.hashnode.com/", {
   },
 });
 
-const directory = '/blog/'
+const directory = process.env.CUSTOM_DIR || '/'
 
 async function run() {
   const GITHUB_REPOSITORY =
@@ -110,12 +110,13 @@ const parseMdxFileContent = async (fileContent) => {
 
   const variables = {
     "input" : {
-      "title":  "My First article", // spread the entire front matter
+      "title":  title, // spread the entire front matter
       "publicationId": "5faeafa108f9e538a0136e73", // needs to be constant
       "tags": [],
       "contentMarkdown": content
     }
   }
+  console.log(variables)
 
   // const results = await graphqlClient.request(mutation, variables);
   // console.log(results)

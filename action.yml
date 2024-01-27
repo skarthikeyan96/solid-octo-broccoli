@@ -12,6 +12,9 @@ inputs:
   PUBLICATION_ID: 
     description: 'Publication id'
     required: true
+  CUSTOM_DIR:
+    description: 'Directory where the blogs resides in , defaults to root dir'
+    required: false
 
 
 runs:
