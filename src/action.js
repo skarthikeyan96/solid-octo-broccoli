@@ -70,7 +70,7 @@ async function run() {
     //   console.log(res)
   } catch (error) {
     // console.log("asda")
-    // console.error('Error:', error);
+    console.error('Error:', error);
   }
 }
 
