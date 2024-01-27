@@ -1,12 +1,25 @@
 {
   "name": "hashnode-github-action",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build src/action.js -o dist"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/core": "^5.1.0",
+    "axios": "^1.6.5",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
+    "gray-matter": "^4.0.3",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
+  }
 }
