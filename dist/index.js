@@ -43518,7 +43518,7 @@ async function run() {
         const filePath = file.filename;
 
         const fileContentResponse = await lib_axios.get(
-          `https://raw.githubusercontent.com/skarthikeyan96/solid-octo-broccoli/${commitHash}/${directory}${filePath}`
+          `https://raw.githubusercontent.com/skarthikeyan96/solid-octo-broccoli/${commitHash}/${filePath}`
         );
 
 
