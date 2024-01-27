@@ -24,8 +24,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
-    - run: node index.js
-      env:
+    
+    - uses: ./
+      with:
           ENV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERSONAL_ACCESS_TOKEN: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+          PUBLICATION_ID: ${{secrets.PUBLICATION_ID}}
     

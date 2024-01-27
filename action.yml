@@ -1,0 +1,19 @@
+name: 'Hashnode publishing Action'
+description: 'Publishing blogs to hashnodel'
+author: 'Karthikeyan <imkarthikeyans@gmail.com>'
+
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub token'
+    required: true
+  PERSONAL_ACCESS_TOKEN:
+    description: 'Hashnode Personal Access token'
+    required: true
+  PUBLICATION_ID: 
+    description: 'Publication id'
+    required: true
+
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

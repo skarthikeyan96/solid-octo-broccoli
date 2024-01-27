@@ -3,6 +3,14 @@ import fs from 'fs'
 import { execSync } from 'child_process';
 import grayMatter from 'gray-matter'
 
+import { request, gql, GraphQLClient } from 'graphql-request';
+
+const graphqlClient = new GraphQLClient('https://gql.hashnode.com/',{
+  headers:{
+    "Authorization": process.env.PERSONAL_ACCESS_TOKEN
+  }
+})
+
 async function run() {
   const GITHUB_REPOSITORY =
     "https://github.com/skarthikean96/solid-octo-broccoli";
@@ -55,10 +63,49 @@ async function run() {
  
 }
 
-
-const parseMdxFileContent = (fileContent) => {
- const data =  grayMatter(fileContent);
+/**
+ * 
+ * mutation PublishPost($input: PublishPostInput!) {
+  publishPost (input: $input){
+    post {
+      id
+      slug
+      title
+      subtitle
+    }
+  }
+}
+ */
+const parseMdxFileContent = async (fileContent) => {
+ const {data, content} =  grayMatter(fileContent);
+ 
  console.log(data)
+  
+ // parse the content and make it ready for sending to hashnode's server
+
+// const mutation = gql`
+//  mutation PublishPost($input: PublishPostInput!) {
+//   publishPost (input: $input){
+//     post {
+//       id
+//       slug
+//       title
+//       subtitle
+//     }
+//   }
+// }`
+
+// const variables = {
+//   "input" : {
+//     "title":  "My First article", // spread the entire front matter
+//     "publicationId": "5faeafa108f9e538a0136e73", // needs to be constant
+//     "tags": [],
+//     "contentMarkdown": content
+//   }
+// }
+
+// const results = await graphqlClient.request(mutation, variables);
+// console.log(results)
 }
 
 run()
